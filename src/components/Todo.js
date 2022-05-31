@@ -19,17 +19,18 @@ export default function Todo(props) {
 
   // Templates
   const editingTemplate = (
-    <form className="stack-small">
+    <form className="stack-small" onSubmit={handleSubmit}>
       <div className="form-group">
         <label className="todo-label" htmlFor={props.id}>
           New name for {props.name}
         </label>
-        <input 
-        id={props.id} 
+        <input
+        id={props.id}
         className="todo-text" 
         type="text"
         value={newName} 
-        onChange={handleChange}/>
+        onChange={handleChange}
+        autoComplete="off"/>
       </div>
       <div className="btn-group">
         <button type="button" 
