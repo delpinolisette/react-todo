@@ -2,6 +2,10 @@
 
 This is my take on the classic React TODO app
 
+# Future Changes 
+
+- [ ] make filter keys unique
+- [ ] implement accessibility features
 
 # Getting Started with Create React App
 

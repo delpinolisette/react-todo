@@ -6,28 +6,23 @@ import Todo from "./components/Todo";
 import Form from "./components/Form";
 import FilterButton from "./components/FilterButton";
 
-
 /**
- * State and components which shouldn't be recalcualted 
+ * State and components which shouldn't be recalcualted
  */
 
-// Filters for Tasks
-const [filter,setFilter] = useState('All'); // state for filters on application
-// object to store the filter maps 
-// uppercase because immutable 
+// object to store the filter maps
+// uppercase because immutable
 const FILTERMAP = {
-  All : ()=> true, 
-  Ongoing : task => !task.completed,
-  Completed : task => task.completed 
+  All: () => true,
+  Ongoing: (task) => !task.completed,
+  Completed: (task) => task.completed,
 };
 // grab all possible keys in FILTERMAP
 const FILTERNAMES = Object.keys(FILTERMAP);
 
-
-
 /**
- * 
- * @param {} props 
+ *
+ * @param {} props
  * @returns TODO App
  */
 
@@ -39,6 +34,9 @@ function App(props) {
 
   const [tasks, setTasks] = useState(props.tasks); //sets initial task state
   // console.log(tasks);
+
+  // Filters for Tasks
+  const [filter, setFilter] = useState("All"); // state for filters on application
 
   function toggleTaskCompleted(id) {
     // takes in a task id and tags it as completed
@@ -60,7 +58,6 @@ function App(props) {
     setTasks(updatedTasks);
   }
 
-
   //grabs each data element from DATA array passed in and creates a Todo component.
   const tasklist = tasks.map((task) => (
     <Todo
@@ -72,6 +69,14 @@ function App(props) {
       editTask={editTask}
       deleteTask={deleteTask}
     />
+  ));
+
+  const filterlist = FILTERNAMES.map((name) => (
+    <FilterButton 
+    key={name + nanoid()} 
+    name={name}
+    isPressed={name == filter} 
+    setFilter={setFilter}/>
   ));
 
   //callback function props for adding a task
@@ -87,9 +92,8 @@ function App(props) {
     setTasks([...tasks, newTask]); //save task name coming from Form props (which comes from its state)
   }
 
-  function deleteTask(id){
-
-    //testing 
+  function deleteTask(id) {
+    //testing
     // const taskToDelete = tasks.map(task =>{
     //   if (id === task.id){
     //     return task
@@ -98,16 +102,15 @@ function App(props) {
     // })
     // console.log(taskToDelete)
 
-    // actual deletion from state 
-    const remainingTasks = tasks.filter(task => task.id !== id)
-    setTasks(remainingTasks)
+    // actual deletion from state
+    const remainingTasks = tasks.filter((task) => task.id !== id);
+    setTasks(remainingTasks);
   }
 
-
-  function editTask(id, newName){
-    const editedTasks = tasks.map(task => {
-      if (task.id === id){
-        return {...task, name:newName}
+  function editTask(id, newName) {
+    const editedTasks = tasks.map((task) => {
+      if (task.id === id) {
+        return { ...task, name: newName };
       }
       return task;
     });
@@ -115,7 +118,8 @@ function App(props) {
   }
 
   // count number of remaining tasks
-  const tasksNumNoun = (tasklist.length > 1 || tasklist.length == 0) ? "tasks" : "task";
+  const tasksNumNoun =
+    tasklist.length > 1 || tasklist.length == 0 ? "tasks" : "task";
   const headingText = `${tasklist.length} ${tasksNumNoun} remaining`;
 
   // something that is difficult for me to understand is what is coming from the js and what is okay to be pure JSX or html
@@ -126,11 +130,7 @@ function App(props) {
       <h1>{props.name}</h1>
       {/* example of callback prop */}
       <Form addTask={addTask} />
-      <div className="filters btn-group stack-exception">
-        <FilterButton />
-        <FilterButton />
-        <FilterButton />
-      </div>
+      <div className="filters btn-group stack-exception">{filterlist}</div>
       <h2 id="list-heading">
         {headingText}
         {/* update this */}
