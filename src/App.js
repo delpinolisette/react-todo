@@ -43,7 +43,6 @@ function App(props) {
       name={task.name}
       completed={task.completed}
       key={task.id}
-      // unique keys yo, need to use nanoid() in future.
       toggleTaskCompleted={toggleTaskCompleted}
       editTask={editTask}
       deleteTask={deleteTask}

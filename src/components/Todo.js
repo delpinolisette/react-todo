@@ -3,11 +3,18 @@ import React, { useState } from "react";
 export default function Todo(props) {
   // is editing state
   const [isEditing, setEditing] = useState(false); // default value is false
-  //name of task state
+  //editing task state
   const [newName, setNewName] = useState("");
 
   function handleChange(e) {
     setNewName(e.target.value);
+  }
+
+  function handleSubmit(e){
+    e.preventDefault(); 
+    props.editTask(props.id, newName) // we've written this callback prop function 
+    setNewName("") // keep new input blank
+    setEditing(false)
   }
 
   // Templates
