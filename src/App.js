@@ -6,6 +6,31 @@ import Todo from "./components/Todo";
 import Form from "./components/Form";
 import FilterButton from "./components/FilterButton";
 
+
+/**
+ * State and components which shouldn't be recalcualted 
+ */
+
+// Filters for Tasks
+const [filter,setFilter] = useState('All'); // state for filters on application
+// object to store the filter maps 
+// uppercase because immutable 
+const FILTERMAP = {
+  All : ()=> true, 
+  Ongoing : task => !task.completed,
+  Completed : task => task.completed 
+};
+// grab all possible keys in FILTERMAP
+const FILTERNAMES = Object.keys(FILTERMAP);
+
+
+
+/**
+ * 
+ * @param {} props 
+ * @returns TODO App
+ */
+
 function App(props) {
   // const subject="PM Prototype for Data Mapping";
 
