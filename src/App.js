@@ -59,7 +59,7 @@ function App(props) {
   }
 
   //grabs each data element from DATA array passed in and creates a Todo component.
-  const tasklist = tasks.map((task) => (
+  const tasklist = tasks.filter(FILTERMAP[filter]).map((task) => (
     <Todo
       id={task.id}
       name={task.name}
